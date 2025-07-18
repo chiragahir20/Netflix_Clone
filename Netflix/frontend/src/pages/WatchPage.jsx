@@ -18,8 +18,6 @@ const WatchPage = () => {
 	const [similarContent, setSimilarContent] = useState([]);
 	const { contentType } = useContentStore();
 
-	
-
 	const sliderRef = useRef(null);
 
 	useEffect(() => {
@@ -70,8 +68,7 @@ const WatchPage = () => {
 	}, [contentType, id]);
 
 	const handleNext = () => {
-		if (Array.isArray(trailers) && currentTrailerIdx < trailers.length - 1)
- setCurrentTrailerIdx(currentTrailerIdx + 1);
+		if (currentTrailerIdx < trailers.length - 1) setCurrentTrailerIdx(currentTrailerIdx + 1);
 	};
 	const handlePrev = () => {
 		if (currentTrailerIdx > 0) setCurrentTrailerIdx(currentTrailerIdx - 1);
@@ -109,8 +106,7 @@ const WatchPage = () => {
 			<div className='mx-auto container px-4 py-8 h-full'>
 				<Navbar />
 
-				{Array.isArray(trailers) && trailers.length > 0 && (
-
+				{trailers.length > 0 && (
 					<div className='flex justify-between items-center mb-4'>
 						<button
 							className={`
@@ -139,8 +135,7 @@ const WatchPage = () => {
 				)}
 
 				<div className='aspect-video mb-8 p-2 sm:px-10 md:px-32'>
-					{Array.isArray(trailers) && trailers.length > 0 && (
-
+					{trailers.length > 0 && (
 						<ReactPlayer
 							controls={true}
 							width={"100%"}
@@ -150,7 +145,7 @@ const WatchPage = () => {
 						/>
 					)}
 
-					{Array.isArray(trailers) && trailers.length === 0 && (
+					{trailers?.length === 0 && (
 						<h2 className='text-xl text-center mt-5'>
 							No trailers available for{" "}
 							<span className='font-bold text-red-600'>{content?.title || content?.name}</span> 😥

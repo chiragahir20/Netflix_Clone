@@ -11,7 +11,6 @@ export const useAuthStore = create((set) => ({
 	signup: async (email, username, password) => {
 		set({ isSigningUp: true });
 		try {
-			console.log("Incoming req.body:", { email, username, password });
 			const response = await axios.post("/api/v1/auth/signup", { email, username, password });
 			set({ user: response.data.user, isSigningUp: false });
 			toast.success("Account created successfully");
