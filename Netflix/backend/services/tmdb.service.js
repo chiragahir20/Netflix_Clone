@@ -7,7 +7,7 @@ export const fetchFromTMDB = async (url) => {
         headers: {
             accept: 'application/json',
             Authorization: 'Bearer ' + ENV_VARS.TMDB_API_KEY
-        }
+        },
     };
 
     const response = await axios.get(url, options);
@@ -16,4 +16,4 @@ export const fetchFromTMDB = async (url) => {
         throw new Error('Failed to fetch data from TMDB'+ response.statusText);
     }
     return response.data;
-}
+};

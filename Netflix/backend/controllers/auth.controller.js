@@ -40,6 +40,7 @@ export async function signup(req, res) {
         const hashedPassword = await bcryptjs.hash(password, salt);
 
         const PROFILE_PICS = ["/avatar1.png", "/avatar2.png", "/avatar3.png"];
+
         const image = PROFILE_PICS[Math.floor(Math.random() * PROFILE_PICS.length)];
 
 
@@ -52,10 +53,12 @@ export async function signup(req, res) {
 
             generateTokenAndSetCookie(newUser._id, res);
             await newUser.save();
+
             res.status(201).json({success: true, user: {
                 ...newUser._doc,
                 password: "" // Exclude password from response
-            }})
+            },
+        });
        
 
     } catch (error) {
@@ -80,17 +83,18 @@ export async function login(req, res) {
        const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
        if(!isPasswordCorrect){
-              return res.status(404).json({success: false, message: "Invalid credentials"});
+              return res.status(400).json({success: false, message: "Invalid credentials"});
        }
 
          generateTokenAndSetCookie(user._id, res);
+
          res.status(200).json({
               success: true,
               user: {
                 ...user._doc,
                 password: "" // Exclude password from response
-              }
-         })
+              },
+         });
    } catch (error) {
          console.log("Error in login controller:", error.message);
          res.status(500).json({success: false, message: "Internal server error"});
@@ -110,7 +114,8 @@ export async function logout(req, res) {
 
 export async function authcheck(req, res) {
     try {
-        res.status(404).json({ success: true, user: req.user });
+        console.log("req.user:", req.user);
+        res.status(200).json({ success: true, user: req.user });
     } catch (error) {
         console.log("Error in authcheck controller:", error.message);
         res.status(500).json({ success: false, message: "Internal server error" });
